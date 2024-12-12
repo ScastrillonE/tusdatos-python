@@ -11,6 +11,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "requests>=2.25.0",
+        "httpx>=0.23.0",
     ],
     python_requires=">=3.7",
     classifiers=[
