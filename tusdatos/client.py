@@ -46,7 +46,7 @@ class DataServiceAsync:
         :param issue_date: Issue date (optional).
         :return: Query result.
         """
-        payload = {"doc": document, "typedoc": doc_type}
+        payload = {"doc": document, "typedoc": doc_type,"force": True}
         if issue_date:
             payload["fechaE"] = issue_date
         return await self._send_request("POST", "/api/launch", json=payload)
