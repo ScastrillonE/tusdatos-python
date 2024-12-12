@@ -6,27 +6,20 @@ from .exceptions import APIConnectionError
 class DataService:
     def __init__(self, environment: str = "production", username: Optional[str] = None, password: Optional[str] = None):
         """
-        Initialize the client to interact with the TusDatos.co API.
+        Initialize the client to interact with the TusDatos.co API using Basic Auth.
 
         :param environment: Environment to use ('production' or 'testing').
         :param username: Username for authentication.
         :param password: Password for authentication.
         """
-        self._validate_environment(environment)
         self.base_url = PRODUCTION_URL if environment == "production" else TESTING_URL
         self.client = self._initialize_client(username, password)
 
     @staticmethod
-    def _validate_environment(environment: str):
-        """Validate that the specified environment is valid."""
-        if environment not in ["production", "testing"]:
-            raise ValueError("Environment must be 'production' or 'testing'.")
-
-    @staticmethod
-    def _initialize_client(username: Optional[str], password: Optional[str]) -> requests.Session:
-        """Initialize the HTTP client configuration."""
+    def _initialize_client(username: str, password: str) -> requests.Session:
+        """Initialize the HTTP client with Basic Auth."""
         session = requests.Session()
-        session.auth = (username or "pruebas", password or "password")
+        session.auth = (username, password)  # Configure Basic Auth
         session.headers.update({
             "Content-Type": "application/json",
             "Accept": "application/json",
